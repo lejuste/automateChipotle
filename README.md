@@ -1,2 +1,2 @@
 # automateChipotle
-Orders chipotle through automating though the website by a command through the terminal
+Orders the usual chipotle burrito bowl though the navigating through the website autonomously. 
