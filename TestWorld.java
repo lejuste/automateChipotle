@@ -8,8 +8,10 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import org.w3c.dom.html.HTMLSelectElement;
 
 import java.util.*;
 
@@ -18,8 +20,8 @@ public class TestWorld {
 
     String loginEmail = "jus.lee18@gmail.com";
     String password = "Aa1234!@#$";
-    int atAlameda = 1;
-    int atSantaCruz = 0;
+    int atAlameda = 0;
+    int atSantaCruz = 1;
 
     /** http://seleniumhq.org **/
     @Test
@@ -28,11 +30,9 @@ public class TestWorld {
 
         WebDriver driver = new ChromeDriver();
         JavascriptExecutor js = (JavascriptExecutor) driver;
-//        WebDriverWait wait = new WebDriverWait(driver, 5);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='findAddressSubmit']/input"))).sendKeys("95064");
 
         driver.get("https://chipotle.com");
-
+        driver.manage().window().maximize();
 
         //driver.findElement(By.partialLinkText("order")).click();
         //driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
@@ -61,7 +61,10 @@ public class TestWorld {
 //        driver.findElement(By.id("PartialAddress")).sendKeys("95064\n");
 
 
-        driver.get("https://order.chipotle.com/Meal/Index/1716");
+        //driver.get("https://order.chipotle.com/Meal/Index/1716");
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("myAccount")));
+
         if(atSantaCruz == 1){
             driver.get("https://order.chipotle.com/Meal/Index/1716");
         }else if(atAlameda == 1){
@@ -72,9 +75,7 @@ public class TestWorld {
 
         js.executeScript("window.scrollBy(0,500)");
 //
-//        System.out.println("before loop.");
 
-        //WebElement bowl =
         driver.findElement(By.xpath("//*[@id = 'dvSelectEntree']/div[3]/div[2]")).click();
 
         //entreeMods/modsContent/modsContentBody/column meat seperate2
@@ -134,10 +135,30 @@ public class TestWorld {
         Action doIt = action.build();
         doIt.perform();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout")));
-        WebElement checkout = driver.findElement(By.xpath("//*[id@ = 'checkout']/a[1]"));
-        checkout.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout"))).click();
 
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("paymentMethods")));
+
+        js.executeScript("window.scrollBy(0,200)");
+
+        WebElement createPayment = driver.findElement(By.xpath("//*[@id = 'paymentMethods']/label[1]"));//last div is menu item
+        System.out.println(createPayment.getText());
+        createPayment.click();
+
+
+        //wait.until(ExpectedConditions.elementToBeClickable(By.id("continueToReview"))).click();
+        WebElement toReview = driver.findElement(By.xpath("//*[@id = 'continueToReview']"));//last div is menu item
+        Actions review = new Actions(driver);
+        review.moveToElement(toReview);
+        review.click();
+        Action conReview = review.build();
+        conReview.perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("placeOrderButton")));
+
+        js.executeScript("window.scrollBy(0,200);");
+        
 
 
     }
