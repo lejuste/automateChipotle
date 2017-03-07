@@ -18,8 +18,8 @@ import java.util.*;
 
 public class TestWorld {
 
-    String loginEmail = "jus.lee18@gmail.com";
-    String password = "Aa1234!@#$";
+    String loginEmail = "loginemal";
+    String password = "password";
     int atAlameda = 0;
     int atSantaCruz = 1;
 
